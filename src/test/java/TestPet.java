@@ -4,16 +4,16 @@
 import org.junit.jupiter.api.Test;
 
 // 2 - classe
-public class TestUser {
+public class TestPet {
     // 2.1 atributos
     static String ct = "application/json";
-    static String uriUser = "https://petstore.swagger.io/v2/user";
+    static String uriPet = "https://petstore.swagger.io/v2/pet";
 
     // função de leitura de Json
     public static String lerArquivoCSV(String arquivoJson){
         // TODO: Completar a leitura do arquivo
         // return new String(Files)
-        return null
+        return null;
     }
 
 
