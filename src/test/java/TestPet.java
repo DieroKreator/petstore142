@@ -32,8 +32,8 @@ public class TestPet {
     @Test
     public void testPostPet() throws IOException{
         // carregar os dados do arquivo json do pet
-        String jsonBody = lerArquivoCSV("/src/test/resources/json/pet1.json");
-        String petId = "602740501";
+        String jsonBody = lerArquivoCSV("src/test/resources/json/pet1.json");
+        int petId = 602740501;
 
         given()
             .contentType(ct)
