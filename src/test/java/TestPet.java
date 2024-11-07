@@ -1,18 +1,14 @@
 // 0 - nome do pacote
 
 // 1 - bibliotecas
-import io.restassured.response.Response;
-
-import org.junit.jupiter.api.Test;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.is;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static io.restassured.RestAssured.config;
-import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
-import static org.hamcrest.Matchers.*;
+import org.junit.jupiter.api.Test;
 
 // 2 - classe
 public class TestPet {
