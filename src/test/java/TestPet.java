@@ -1,7 +1,6 @@
 // 0 - nome do pacote
 
 // 1 - bibliotecas
-import static io.restassured.RestAssured.config;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
