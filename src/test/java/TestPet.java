@@ -137,10 +137,15 @@ public class TestPet {
     {
         Pet pet = new Pet();
 
-        pet.petId = petId;
-        pet.petName = petName;
-        pet.catId = catId;
-        pet.catName = catName;
+        pet.id = petId;
+        pet.category.id = catId;
+        pet.category.name = catName;
+        pet.name = petName;
+        // pet.photoUrls esta vazio
+        pet.tags[0].id = 9;
+        pet.tags[0].name = "vacinado";
+        pet.tags[1].id = 8;
+        pet.tags[1].name = "vermifugado";
         pet.status = status1;
 
         // Criar um Json para o Body ser enviado a partir da classe Pet e do CSV
