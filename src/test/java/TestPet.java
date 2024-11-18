@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.is;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Locale.Category;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -136,12 +137,18 @@ public class TestPet {
     ) 
     {
         Pet pet = new Pet();
+        Pet.Category category = pet.new Category(); // instanccia a subclasse Category
+        Pet.Tag[] tags = new Pet.Tag[2]; // instanccia a subclasse Tag
+        tags[0] = pet.new Tag();
+        tags[1] = pet.new Tag();
 
         pet.id = petId;
+        pet.category = category; // associar a pet.category com a subclasse category
         pet.category.id = catId;
         pet.category.name = catName;
         pet.name = petName;
         // pet.photoUrls esta vazio
+        pet.tags = tags; // associar a pet.tags com a subclasse tags
         pet.tags[0].id = 9;
         pet.tags[0].name = "vacinado";
         pet.tags[1].id = 8;
