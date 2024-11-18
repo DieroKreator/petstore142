@@ -141,7 +141,7 @@ public class TestPet {
         pet.petName = petName;
         pet.catId = catId;
         pet.catName = catName;
-        pet.status1 = status1;
+        pet.status = status1;
 
         // Criar um Json para o Body ser enviado a partir da classe Pet e do CSV
         Gson gson = new Gson();
