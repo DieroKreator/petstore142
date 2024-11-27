@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 public class TestUser {
     static String ct = "application/json";
     static String uriUser = "https://petstore.swagger.io/v2/user";
+    static String username = "zeca";
     static String token;
 
     public static String lerArquivoCSV(String arquivoJson) throws IOException{
@@ -72,5 +73,24 @@ public class TestUser {
         ;
     }
 
-    
+    @Test @Order(2)
+    public void testGetUser(){
+
+        given()
+            .contentType(ct)
+            .log().all()
+            .header("api_key: ", TestUser.testLogin())
+        .when()
+            .get(uriUser + "/" + username)
+        .then()
+            .log().all()
+            .statusCode(200)
+            .body("username", is("zeca"))
+            .body("firstName", is("Zehn"))
+            .body("lastName", is("Carlton"))
+            .body("email", is("zeca@gmail.com"))
+            .body("phone", is("555258465275"))
+            .body("userStatus", is(1))
+        ;
+    }
 }
