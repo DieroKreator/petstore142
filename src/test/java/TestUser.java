@@ -53,7 +53,7 @@ public class TestUser {
     }
 
     @Test @Order(1)
-    public void testPostPet() throws IOException{
+    public void testPostUser() throws IOException{
         // carregar os dados do arquivo json do pet
         String jsonBody = lerArquivoCSV("src/test/resources/json/user1.json");
 
@@ -71,4 +71,6 @@ public class TestUser {
             .body("message", is("740560201"))
         ;
     }
+
+    
 }
