@@ -66,10 +66,9 @@ public class TestUser {
         .then()
             .log().all()
             .statusCode(200)
-            .body("name", is("Snoopy"))
-            .body("id", is(petId))
-            .body("category.name", is("cachorro"))
-            .body("tags[0].name", is("vacinado"))
+            .body("code", is(200))
+            .body("type", is("unknown"))
+            .body("message", is("740560201"))
         ;
     }
 }
