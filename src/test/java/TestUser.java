@@ -115,4 +115,24 @@ public class TestUser {
             .body("message", is("740560201"))
         ;
     }
+
+    @Test @Order(4)
+    public void testDeleteUser(){
+        // Configura --> Dados de entrada e saída no começo da Classe
+
+        given()
+            .contentType(ct)
+            .log().all()
+        // Executa
+        .when()
+            .delete(uriUser + "/" + username)
+        // Valida
+        .then()
+            .log().all()
+            .statusCode(200) // se comunicou e processou
+            .body("code", is(200))   // se apagou
+            .body("type", is("unknown"))
+            .body("message", is("zeca"))
+        ;
+    }
 }
