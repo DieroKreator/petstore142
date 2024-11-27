@@ -79,7 +79,7 @@ public class TestUser {
         given()
             .contentType(ct)
             .log().all()
-            .header("api_key: ", TestUser.testLogin())
+            .header("api_key: ", testLogin())
         .when()
             .get(uriUser + "/" + username)
         .then()
@@ -91,6 +91,28 @@ public class TestUser {
             .body("email", is("zeca@gmail.com"))
             .body("phone", is("555258465275"))
             .body("userStatus", is(1))
+        ;
+    }
+
+    @Test @Order(3)
+    public void testPutUser() throws IOException{
+        // Configura
+        String jsonBody = lerArquivoCSV("src/test/resources/json/user2.json");
+
+        given()
+            .contentType(ct)
+            .log().all()
+            .body(jsonBody)
+        // Executa
+        .when()
+            .put(uriUser+ "/" + username)
+        // Valida
+        .then()
+            .log().all()
+            .statusCode(200)
+            .body("code", is(200))
+            .body("type", is("unknown"))
+            .body("message", is("740560201"))
         ;
     }
 }
