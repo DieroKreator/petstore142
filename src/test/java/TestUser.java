@@ -11,6 +11,10 @@ import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+
+import com.google.gson.Gson;
 
 public class TestUser {
     static String ct = "application/json";
@@ -134,5 +138,58 @@ public class TestUser {
             .body("type", is("unknown"))
             .body("message", is("zeca"))
         ;
+    }
+
+    // Data Driven Testing (DDT) / Teste Direcionado por Dados / Teste com Massa
+    // Teste com Json parametrizado
+    @ParameterizedTest @Order(5)
+    @CsvFileSource(resources = "/csv/petMassa.csv", numLinesToSkip = 1, delimiter = ',')
+    public void testPostPetDDT(
+        int petId,
+        String petName,
+        int catId,
+        String catName,
+        String status1,
+        String status2
+    ) 
+    {
+        Pet pet = new Pet();
+        Pet.Category category = pet.new Category(); // instanccia a subclasse Category
+        Pet.Tag[] tags = new Pet.Tag[2]; // instanccia a subclasse Tag
+        tags[0] = pet.new Tag();
+        tags[1] = pet.new Tag();
+
+        pet.id = petId;
+        pet.category = category; // associar a pet.category com a subclasse category
+        pet.category.id = catId;
+        pet.category.name = catName;
+        pet.name = petName;
+        // pet.photoUrls esta vazio
+        pet.tags = tags; // associar a pet.tags com a subclasse tags
+        pet.tags[0].id = 9;
+        pet.tags[0].name = "vacinado";
+        pet.tags[1].id = 8;
+        pet.tags[1].name = "vermifugado";
+        pet.status = status1;
+
+        // Criar um Json para o Body ser enviado a partir da classe Pet e do CSV
+        Gson gson = new Gson();
+        String jsonBody = gson.toJson(pet);
+        
+        given()
+            .contentType(ct)
+            .log().all()
+            .body(jsonBody)
+        .when()
+            .post(uriPet)
+        .then()
+            .log().all()
+            .statusCode(200)
+            .body("id", is(petId))
+            .body("name", is(petName))
+            .body("category.id", is(catId))
+            .body("category.name", is(catName))
+            .body("status", is(status1));
+
     }
 }
