@@ -1,4 +1,4 @@
-userId,username,firstName,lastName,email,password,phone,userStatus
+id,username,firstName,lastName,email,password,phone,userStatus
 814379201,figotti,Fidel,Santos,figotti@gmail.com,123456,51452895685,1
 814379202,gotti,Goofy,Saint,gosa@gmail.com,123457,51452895686,1
 814379203,fredfo,Freddy,Fontalvo,fefo@gmail.com,123434,51452895638,1

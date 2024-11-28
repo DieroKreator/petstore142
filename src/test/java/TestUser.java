@@ -182,14 +182,8 @@ public class TestUser {
         .then()
             .log().all()
             .statusCode(200)
-            .body("id", is(userId))
-            .body("username", is(username))
-            .body("firstName", is(firstName))
-            .body("lastName", is(lastName))
-            .body("email", is(email))
-            .body("password", is(password))
-            .body("phone", is(phone))
-            .body("userStatus", is(userStatus));
-
+            .body("code", is(200))
+            .body("type", is("unknown"))
+            .body("message", is(String.valueOf(userId)));
     }
 }
