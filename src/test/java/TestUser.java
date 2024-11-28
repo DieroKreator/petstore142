@@ -9,13 +9,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
 import com.google.gson.Gson;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TestUser {
     static String ct = "application/json";
     static String uriUser = "https://petstore.swagger.io/v2/user";
@@ -143,53 +146,50 @@ public class TestUser {
     // Data Driven Testing (DDT) / Teste Direcionado por Dados / Teste com Massa
     // Teste com Json parametrizado
     @ParameterizedTest @Order(5)
-    @CsvFileSource(resources = "/csv/petMassa.csv", numLinesToSkip = 1, delimiter = ',')
-    public void testPostPetDDT(
-        int petId,
-        String petName,
-        int catId,
-        String catName,
-        String status1,
-        String status2
+    @CsvFileSource(resources = "/csv/userMassa.csv", numLinesToSkip = 1, delimiter = ',')
+    public void testPostUserDDT(
+        int userId,
+        String username,
+        String firstName,
+        String lastName,
+        String email,
+        String password,
+        String phone,
+        int userStatus
     ) 
     {
-        Pet pet = new Pet();
-        Pet.Category category = pet.new Category(); // instanccia a subclasse Category
-        Pet.Tag[] tags = new Pet.Tag[2]; // instanccia a subclasse Tag
-        tags[0] = pet.new Tag();
-        tags[1] = pet.new Tag();
+        User user = new User();
 
-        pet.id = petId;
-        pet.category = category; // associar a pet.category com a subclasse category
-        pet.category.id = catId;
-        pet.category.name = catName;
-        pet.name = petName;
-        // pet.photoUrls esta vazio
-        pet.tags = tags; // associar a pet.tags com a subclasse tags
-        pet.tags[0].id = 9;
-        pet.tags[0].name = "vacinado";
-        pet.tags[1].id = 8;
-        pet.tags[1].name = "vermifugado";
-        pet.status = status1;
+        user.id = userId;
+        user.username = username;
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.email = email;
+        user.password = password; 
+        user.phone = phone; 
+        user.userStatus = userStatus; 
 
-        // Criar um Json para o Body ser enviado a partir da classe Pet e do CSV
+        // Criar um Json para o Body ser enviado a partir da classe User e do CSV
         Gson gson = new Gson();
-        String jsonBody = gson.toJson(pet);
+        String jsonBody = gson.toJson(user);
         
         given()
             .contentType(ct)
             .log().all()
             .body(jsonBody)
         .when()
-            .post(uriPet)
+            .post(uriUser)
         .then()
             .log().all()
             .statusCode(200)
-            .body("id", is(petId))
-            .body("name", is(petName))
-            .body("category.id", is(catId))
-            .body("category.name", is(catName))
-            .body("status", is(status1));
+            .body("id", is(userId))
+            .body("username", is(username))
+            .body("firstName", is(firstName))
+            .body("lastName", is(lastName))
+            .body("email", is(email))
+            .body("password", is(password))
+            .body("phone", is(phone))
+            .body("userStatus", is(userStatus));
 
     }
 }
