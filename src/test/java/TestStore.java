@@ -22,7 +22,7 @@ import com.google.gson.Gson;
 public class TestStore {
     static String ct = "application/json";
     static String uriStore = "https://petstore.swagger.io/v2/store/order";
-    static int orderId = 8569201;
+    static int orderId = 922337201;
 
     public static String lerArquivoCSV(String arquivoJson) throws IOException{
         return new String(Files.readAllBytes(Paths.get(arquivoJson)));
@@ -42,7 +42,7 @@ public class TestStore {
         .then()
             .log().all()
             .statusCode(200)
-            .body("id", is(954775001))
+            .body("id", is(922337201))
             .body("petId", is(602740501))
             .body("quantity", is(1))
             .body("status", is("placed"))
@@ -50,26 +50,24 @@ public class TestStore {
         ;
     }
 
-    // @Test @Order(2)
-    // public void testGetUser(){
+    @Test @Order(2)
+    public void testGetUser(){
 
-    //     given()
-    //         .contentType(ct)
-    //         .log().all()
-    //         .header("api_key: ", testLogin())
-    //     .when()
-    //         .get(uriUser + "/" + username)
-    //     .then()
-    //         .log().all()
-    //         .statusCode(200)
-    //         .body("username", is("zeca"))
-    //         .body("firstName", is("Zehn"))
-    //         .body("lastName", is("Carlton"))
-    //         .body("email", is("zeca@gmail.com"))
-    //         .body("phone", is("555258465275"))
-    //         .body("userStatus", is(1))
-    //     ;
-    // }
+        given()
+            .contentType(ct)
+            .log().all()
+        .when()
+            .get(uriStore + "/" + orderId)
+        .then()
+            .log().all()
+            .statusCode(200)
+            .body("id", is(orderId))
+            .body("petId", is(602740501))
+            .body("quantity", is(1))
+            .body("status", is("placed"))
+            .body("complete", is(true))
+        ;
+    }
 
     // @Test @Order(3)
     // public void testPutUser() throws IOException{
