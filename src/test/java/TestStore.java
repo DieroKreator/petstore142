@@ -69,51 +69,26 @@ public class TestStore {
         ;
     }
 
-    // @Test @Order(3)
-    // public void testPutUser() throws IOException{
-    //     // Configura
-    //     String jsonBody = lerArquivoCSV("src/test/resources/json/user2.json");
+    @Test @Order(3)
+    public void testDeleteUser(){
 
-    //     given()
-    //         .contentType(ct)
-    //         .log().all()
-    //         .body(jsonBody)
-    //     // Executa
-    //     .when()
-    //         .put(uriUser+ "/" + username)
-    //     // Valida
-    //     .then()
-    //         .log().all()
-    //         .statusCode(200)
-    //         .body("code", is(200))
-    //         .body("type", is("unknown"))
-    //         .body("message", is("740560201"))
-    //     ;
-    // }
-
-    // @Test @Order(4)
-    // public void testDeleteUser(){
-    //     // Configura --> Dados de entrada e saída no começo da Classe
-
-    //     given()
-    //         .contentType(ct)
-    //         .log().all()
-    //     // Executa
-    //     .when()
-    //         .delete(uriUser + "/" + username)
-    //     // Valida
-    //     .then()
-    //         .log().all()
-    //         .statusCode(200) // se comunicou e processou
-    //         .body("code", is(200))   // se apagou
-    //         .body("type", is("unknown"))
-    //         .body("message", is("zeca"))
-    //     ;
-    // }
+        given()
+            .contentType(ct)
+            .log().all()
+        .when()
+            .delete(uriStore + "/" + orderId)
+        .then()
+            .log().all()
+            .statusCode(200)
+            .body("code", is(200))
+            .body("type", is("unknown"))
+            .body("message", is(String.valueOf(orderId)))
+        ;
+    }
 
     // // Data Driven Testing (DDT) / Teste Direcionado por Dados / Teste com Massa
     // // Teste com Json parametrizado
-    // @ParameterizedTest @Order(5)
+    // @ParameterizedTest @Order(4)
     // @CsvFileSource(resources = "/csv/userMassa.csv", numLinesToSkip = 1, delimiter = ',')
     // public void testPostUserDDT(
     //     int userId,
