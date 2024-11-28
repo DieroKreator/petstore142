@@ -1,8 +1,4 @@
-import io.restassured.response.Response;
-
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.hasLength;
 import static org.hamcrest.Matchers.is;
 
 import java.io.IOException;
@@ -86,47 +82,45 @@ public class TestStore {
         ;
     }
 
-    // // Data Driven Testing (DDT) / Teste Direcionado por Dados / Teste com Massa
-    // // Teste com Json parametrizado
-    // @ParameterizedTest @Order(4)
-    // @CsvFileSource(resources = "/csv/userMassa.csv", numLinesToSkip = 1, delimiter = ',')
-    // public void testPostUserDDT(
-    //     int userId,
-    //     String username,
-    //     String firstName,
-    //     String lastName,
-    //     String email,
-    //     String password,
-    //     String phone,
-    //     int userStatus
-    // ) 
-    // {
-    //     User user = new User();
+    // Data Driven Testing (DDT) / Teste Direcionado por Dados / Teste com Massa
+    // Teste com Json parametrizado
+    @ParameterizedTest @Order(4)
+    @CsvFileSource(resources = "/csv/storeMassa.csv", numLinesToSkip = 1, delimiter = ',')
+    public void testPostUserDDT(
+        int storeId,
+        int petId,
+        int quantity,
+        String shipDate,
+        String status,
+        boolean complete
+    ) 
+    {
+        Store store = new Store();
 
-    //     user.id = userId;
-    //     user.username = username;
-    //     user.firstName = firstName;
-    //     user.lastName = lastName;
-    //     user.email = email;
-    //     user.password = password; 
-    //     user.phone = phone; 
-    //     user.userStatus = userStatus; 
+        store.id = storeId;
+        store.petId = petId;
+        store.quantity = quantity;
+        store.shipDate = shipDate;
+        store.status = status;
+        store.complete = complete; 
 
-    //     // Criar um Json para o Body ser enviado a partir da classe User e do CSV
-    //     Gson gson = new Gson();
-    //     String jsonBody = gson.toJson(user);
+        // Criar um Json para o Body ser enviado a partir da classe User e do CSV
+        Gson gson = new Gson();
+        String jsonBody = gson.toJson(store);
         
-    //     given()
-    //         .contentType(ct)
-    //         .log().all()
-    //         .body(jsonBody)
-    //     .when()
-    //         .post(uriUser)
-    //     .then()
-    //         .log().all()
-    //         .statusCode(200)
-    //         .body("code", is(200))
-    //         .body("type", is("unknown"))
-    //         .body("message", is(String.valueOf(userId)));
-    // }
+        given()
+            .contentType(ct)
+            .log().all()
+            .body(jsonBody)
+        .when()
+            .post(uriStore)
+        .then()
+            .log().all()
+            .statusCode(200)
+            .body("id", is(storeId))
+            .body("petId", is(petId))
+            .body("quantity", is(quantity))
+            .body("status", is(status))
+            .body("complete", is(complete));
+    }
 }
